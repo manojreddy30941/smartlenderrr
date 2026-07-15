@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Lender</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <main class="app-shell">
+        <section class="workspace" aria-label="Smart Lender prediction workspace">
+            <header class="topbar">
+                <div>
+                    <p class="eyebrow">Smart Lender</p>
+                    <h1>Loan approval prediction</h1>
+                </div>
+                <div class="model-pill" title="Active trained model">
+                    <span class="status-dot"></span>
+                    {{ model_name }}
+                </div>
+            </header>
+
+            <section class="summary-band">
+                <div>
+                    <span class="metric-label">Decision</span>
+                    <strong id="decisionMetric">Awaiting application</strong>
+                </div>
+                <div>
+                    <span class="metric-label">Approval Confidence</span>
+                    <strong id="approvalMetric">--</strong>
+                </div>
+                <div>
+                    <span class="metric-label">Rejection Risk</span>
+                    <strong id="riskMetric">--</strong>
+                </div>
+            </section>
+
+            <form id="predictionForm" class="prediction-form">
+                <fieldset>
+                    <legend>Applicant Profile</legend>
+                    <label>
+                        Dependents
+                        <input type="number" id="dependents" min="0" max="10" value="0" required>
+                    </label>
+                    <label>
+                        Education
+                        <select id="education" required>
+                            <option value="0">Graduate</option>
+                            <option value="1">Not Graduate</option>
+                        </select>
+                    </label>
+                    <label>
+                        Self Employed
+                        <select id="self_employed" required>
+                            <option value="0">No</option>
+                            <option value="1">Yes</option>
+                        </select>
+                    </label>
+                    <label>
+                        CIBIL Score
+                        <input type="number" id="cibil_score" min="300" max="900" value="720" required>
+                    </label>
+                </fieldset>
+
+                <fieldset>
+                    <legend>Loan Details</legend>
+                    <label>
+                        Annual Income
+                        <input type="number" id="income" min="0" step="10000" value="8000000" required>
+                    </label>
+                    <label>
+                        Loan Amount
+                        <input type="number" id="loan_amount" min="0" step="10000" value="1000000" required>
+                    </label>
+                    <label>
+                        Loan Term (Years)
+                        <input type="number" id="loan_term" min="1" max="30" value="5" required>
+                    </label>
+                </fieldset>
+
+                <fieldset>
+                    <legend>Assets</legend>
+                    <label>
+                        Residential Assets
+                        <input type="number" id="residential_assets" min="0" step="10000" value="3000000" required>
+                    </label>
+                    <label>
+                        Commercial Assets
+                        <input type="number" id="commercial_assets" min="0" step="10000" value="2000000" required>
+                    </label>
+                    <label>
+                        Luxury Assets
+                        <input type="number" id="luxury_assets" min="0" step="10000" value="1500000" required>
+                    </label>
+                    <label>
+                        Bank Assets
+                        <input type="number" id="bank_assets" min="0" step="10000" value="500000" required>
+                    </label>
+                </fieldset>
+
+                <div class="actions">
+                    <button type="button" id="sampleApproved">Low Risk</button>
+                    <button type="button" id="sampleRejected">High Risk</button>
+                    <button type="submit" class="primary-button">Predict</button>
+                </div>
+            </form>
+
+            <section id="result" class="result-panel" aria-live="polite">
+                <strong id="statusHeader">Submit an application to see a decision.</strong>
+                <span id="probabilityText">The model will calculate approval and rejection probability.</span>
+            </section>
+        </section>
+    </main>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
